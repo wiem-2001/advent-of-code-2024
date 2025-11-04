@@ -45,6 +45,26 @@ public class Main {
         return safety;
     }
 
+    public static boolean safetyAfterDampener(int[] levels) {
+        boolean safety = true;
+        if (safety(levels)) {
+            return safety;
+        }
+        for (int i = 0; i < levels.length; i++) {
+            int[] modified = new int[levels.length - 1];
+            int index = 0;
+            for (int j = 0; j < levels.length; j++) {
+                if (j != i) {
+                    modified[index++] = levels[j];
+                }
+            }
+            if (safety(modified)) {
+                return safety;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the levels for each report (one per line).");
@@ -68,7 +88,7 @@ public class Main {
         int unsafeCount = 0;
 
         for (int[] levels : allReports) {
-            boolean isSafe = safety(levels);
+            boolean isSafe = safetyAfterDampener(levels);
             if (isSafe) safeCount++;
             else unsafeCount++;
         }
